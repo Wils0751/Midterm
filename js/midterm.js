@@ -31,9 +31,8 @@ function loaddata(){
                     parseJson(req.responseText );
                 }
             }
-        } {
+        } 
         req.send(null)
-    }
     }
 
 function parseJson(obj) {
@@ -46,7 +45,6 @@ function parseJson(obj) {
 
 function next() {
     if (morebutton.innerHTML != 'Show Next') {
-        console.log("written show next");
         morebutton.innerHTML = 'Show Next';
     }
 

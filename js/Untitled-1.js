@@ -50,7 +50,6 @@ function next() {
     }
     if (currentIndex === (totalsize - 1)) {
         btn_showNext.removeEventListener('click', next);
-        alert('Its End! Refresh the page to see it again.');
     }
     currentIndex++;
     console.log("next()");
