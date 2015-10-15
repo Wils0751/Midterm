@@ -1,15 +1,19 @@
 //All your JS code goes here
-var req = new XMLHttpRequest ();
-var newdata= document.querySelector("#output1");
-var olddata=document.querySelector("#output2");
-var loadbutton=document.querySelector("#loadBtn");
-var morebutton=document.querySelector("#showBtn");
-var dataloaded =false;
-var counter={};
-var counter_index=0;
-
 document.addEventListener("DOMContentLoaded", function);
-loadbutton.addEventListener("click",loaddata);//Click event
+var     newdata= document.querySelector("#output1"),
+        olddata=document.querySelector("#output2"),
+        loadbutton=document.querySelector("#loadBtn"),
+        morebutton=document.querySelector("#showBtn");
+
+
+
+var JSONdata =[],
+    counter = 0,
+    JSonfile = "https://raw.githubusercontent.com/joellord/users/master/users.json"
+
+
+
+loadbutton.addEventListener("click",button);//Click event
 
 function button(){
 
@@ -17,21 +21,25 @@ function button(){
   loadbutton.classList.add("disabled");
   morebutton.classList.remove("disabled");
   morebutton.classList.add("enabled");
+  nextdata (JSonfile);
   loaddata.removeEventListener("click",button);
   morebutton.addEventListener("click",nextdata);
     
 }
+
+function Showdata(){
+    
+
 function loaddata(){
-   if (!dataloaded)
-   {
-       dataloaded=true;
-        req.open('GET', 'js/users.json', false); 
+        var requ = new XMLHttpRequest();
+        req.open('GET', file, false); 
         req.send(); 
         req.onreadystatechange = function( )
         { 
-            if(req.readyState == 4 && req.status == 200)
+            if(req.readyState == 4){
+                if ( req.status == 200)
             {
-                    content = JSON.parse( req.responseText );
+                    JSONdata = JSON.parse( req.responseText );
                 }
             }
         }
