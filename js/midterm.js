@@ -1,32 +1,26 @@
 //All your JS code goes here
-var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/users.json";
-var JSONdata ={};
-var loadbutton ={};
-var morebutton ={};
-var counter = 0;
-var totalsize;
-var tempFlag =0; 
-var newdata = document.getElementById("output1");
-var olddata = document.getElementById("output2");
+var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/users.json",
+    JSONdata ={},
+    loadbutton ={},
+    morebutton ={},
+    counter = 0,
+    tempFlag =0,
+    totalsize;
 
 document.addEventListener("DOMContentLoaded", function(event){
-    loadbutton = document.getElementById("loadBtn"),
-    morebutton = document.getElementById("showBtn");
-    loadbutton.addEventListener("click", loaddata);
+    loadbutton = document.querySelector("#loadBtn"),
+    morebutton = document.querySelector("#showBtn"),
+    loadbutton.addEventListener("click", loaddata),
     morebutton.addEventListener("click", next);
 });
     
 function loaddata() {
-    console.log("loaddata()");
     var req = new XMLHttpRequest();
     req.open('GET', JSonfile, false);
     req.onreadystatechange = function() {
-        if (req.readyState == 4) {
-            if (req.status == 200) {
-                //users.json is fetched
-                parseJson(req.responseText);
-            }
-        }
+        if (req.readyState == 4 && req.status == 200)       {
+        parseJson(req.responseText);
+      }
     }
     if (loadbutton.className === 'btn enabled') {
         req.send(null);
@@ -52,10 +46,8 @@ function next() {
     }
     if (counter=== (totalsize - 1)) {
         morebutton.removeEventListener('click', next);
-        alert('Its End! Refresh the page to see it again.');
     }
     counter++;
-    console.log("next()");
 }
 function setFeedByIndex(index) {
     var newdata = document.getElementById("output1");
@@ -63,7 +55,6 @@ function setFeedByIndex(index) {
     if (counter != 0) {
         var olddata = document.getElementById("output2");
         var data = olddata.innerHTML;
-        console.log(tempFlag);
         data = data + '<div class="oldData"><div><img src="' + JSONdata[index - 1]['thumbnail'] + '"><a href="mailto:' + JSONdata[index - 1]['email'] + '">' + toTitleCase(JSONdata[index - 1]['firstName']) + ' ' + toTitleCase(JSONdata[index - 1]['lastName']) + '</a></div></div>';
         olddata.innerHTML = data;
     }
