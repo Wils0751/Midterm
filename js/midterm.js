@@ -4,8 +4,7 @@ var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/u
     loadbutton = {}, 
     morebutton = {},
     counter = 0,
-    tempFlag = 0,
-    totalsize;
+    Flag = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) { // Working with the clickable buttons
     loadbutton = document.querySelector("#loadBtn"),
@@ -43,7 +42,7 @@ function showmore() { // Get show next button working
     }
 
     if (counter < (JSONdata.length)) {
-        setFeedByIndex(counter);
+        Displaydata(counter);
     }
     if (counter > (JSONdata.length - 1)) {
         morebutton.removeEventListener('click', showmore);
@@ -53,7 +52,7 @@ function showmore() { // Get show next button working
     console.log("showmore()");
 }
 
-function setFeedByIndex(index) { // Display Data 
+function Displaydata(index) { // Display Data 
     newdata.innerHTML = '<img src="' + JSONdata[index]['image'] + '"><h2>' + toTitleCase(JSONdata[index]['firstName']) + ' ' + toTitleCase(JSONdata[index]['lastName']) + '</h2><a href="mailto:' + JSONdata[index]['email'] + '">' + JSONdata[index]['email'] + '</a></div>';
     console.log(newdata.innerHTML);
     if (counter != 0) {
@@ -61,10 +60,10 @@ function setFeedByIndex(index) { // Display Data
         data = data + '<div class="oldData"><div><img src="' + JSONdata[index - 1]['thumbnail'] + '"><a href="mailto:' + JSONdata[index - 1]['email'] + '">' + toTitleCase(JSONdata[index - 1]['firstName']) + ' ' + toTitleCase(JSONdata[index - 1]['lastName']) + '</a></div></div>';
         olddata.innerHTML = data;
     }
-    if (tempFlag > 2) {
+    if (Flag > 2) {
         olddata.removeChild(olddata.childNodes[1]);
     }
-    tempFlag++;
+    Flag++;
 }
 
 function toTitleCase(str) {
