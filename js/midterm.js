@@ -46,12 +46,15 @@ function showmore() {// Get show next button working
         setFeedByIndex(counter);
     }
     if (counter > (JSONdata.length - 1)) {
-        morebutton.removeEventListener('click', next);
+        morebutton.removeEventListener('click', showmore);
+	alert("That is all the data")
     }
     counter++;
+	console.log("showmore()");
 }
 function setFeedByIndex(index) {// Display Data o
     newdata.innerHTML = '<img src="' + JSONdata[index]['image'] + '"><h2>' + toTitleCase(JSONdata[index]['firstName']) + ' ' + toTitleCase(JSONdata[index]['lastName']) + '</h2><a href="mailto:' + JSONdata[index]['email'] + '">' + JSONdata[index]['email'] + '</a></div>';
+	console.log (newdata.innerHTML);
     if (counter != 0) {
         var data = olddata.innerHTML;
         data = data + '<div class="oldData"><div><img src="' + JSONdata[index - 1]['thumbnail'] + '"><a href="mailto:' + JSONdata[index - 1]['email'] + '">' + toTitleCase(JSONdata[index - 1]['firstName']) + ' ' + toTitleCase(JSONdata[index - 1]['lastName']) + '</a></div></div>';
