@@ -1,10 +1,10 @@
 //All your JS code goes here
 var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/users.json",//Defining all the variables at begining of code
+    JSONdata = [],
     loadbutton ={},// 
     morebutton ={},
     counter = 0,
     tempFlag =0;
-var JSONdata = [];
 
 document.addEventListener("DOMContentLoaded", function(event){// Working with the clickable buttons
     loadbutton = document.querySelector("#loadBtn"),
