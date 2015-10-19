@@ -1,65 +1,67 @@
 //All your JS code goes here
-var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/users.json",//Defining all the variables at begining of code
+var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/users.json", //Defining all the variables at begining of code
     JSONdata = [],
-    loadbutton ={},// 
-    morebutton ={},
+    loadbutton = {},
+    morebutton = {},
     counter = 0,
-    tempFlag =0;
+    Flag = 0;
 
-document.addEventListener("DOMContentLoaded", function(event){// Working with the clickable buttons
+document.addEventListener("DOMContentLoaded", function(event) { // Working with the clickable buttons
     loadbutton = document.querySelector("#loadBtn"),
-    morebutton = document.querySelector("#showBtn"),
-    loadbutton.addEventListener("click", loaddata),
-    morebutton.addEventListener("click", Showmore);
+        morebutton = document.querySelector("#showBtn"),
+        newdata = document.querySelector("#output1"),
+        olddata = document.querySelector("#output2"),
+        loadbutton.addEventListener("click", loaddata),
+        morebutton.addEventListener("click", Showmore);
+
 });
-    
-function loaddata() {// Fetching JSON Data
+
+function loaddata() { // Fetching JSON Data
     var req = new XMLHttpRequest();
     req.open('GET', JSonfile, false);
     req.onreadystatechange = function() {
-        if (req.readyState == 4 && req.status == 200)       {
-       JSONdata= JSON.parse(req.responseText);
-      }
+        if (req.readyState == 4 && req.status == 200) {
+            JSONdata = JSON.parse(req.responseText);
+        }
     }
     if (loadbutton.className === 'btn enabled') {
         req.send(null);
         Loadbutton();
     }
 }
-function Loadbutton(){
+
+function Loadbutton() { // Working with load button
     loadbutton.className = "btn disabled";
     morebutton.className = "btn enabled";
     loadbutton.removeEventListener('click', loaddata);
-    Showmore();     
+    Showmore();
 }
-function Showmore() {
-  if (morebutton.innerHTML != 'Show Next') {
+
+function Showmore() { /// Show more button and make unclickable after last guy
+    if (morebutton.innerHTML != 'Show Next') {
         morebutton.innerHTML = 'Show Next';
-  }
-  if(counter < (JSONdata.length) ) {
-    setFeedByIndex(counter);
-  }
-  if (counter ===(JSONdata.length -1)){
-       morebutton.removeEventListener('click', DisplayName);
-      
-  }
+    }
+    if (counter < (JSONdata.length)) {
+        setFeedByIndex(counter);
+    }
+    if (counter === (JSONdata.length - 1)) {
+        morebutton.removeEventListener('click', DisplayName);
+
+    }
     counter++;
 }
 
-function setFeedByIndex(index) {// Display Data o
-    var newdata = document.querySelector("#output1");
-    
+function setFeedByIndex(index) { // Display Data 
     newdata.innerHTML = '<img src="' + JSONdata[index]['image'] + '"><h2>' + toTitleCase(JSONdata[index]['firstName']) + ' ' + toTitleCase(JSONdata[index]['lastName']) + '</h2><a href="mailto:' + JSONdata[index]['email'] + '">' + JSONdata[index]['email'] + '</a></div>';
     if (counter != 0) {
-        var olddata = document.querySelector("#output2");
-        var data = olddata.innerHTML;
+        var data = olddata.innerHTML; //Displays old data on side
         data = data + '<div class="oldData"><div><img src="' + JSONdata[index - 1]['thumbnail'] + '"><a href="mailto:' + JSONdata[index - 1]['email'] + '">' + toTitleCase(JSONdata[index - 1]['firstName']) + ' ' + toTitleCase(JSONdata[index - 1]['lastName']) + '</a></div></div>';
         olddata.innerHTML = data;
     }
-    if (tempFlag > 2) {
-       olddata.removeChild(olddata.childNodes[1]);
+    if (Flag > 2) {
+        olddata.removeChild(olddata.childNodes[1]);
     }
-    tempFlag++;
+    Flag++;
 }
 
 function toTitleCase(str) {
