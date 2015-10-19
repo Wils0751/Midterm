@@ -1,17 +1,16 @@
 //All your JS code goes here
 var JSonfile = "https://raw.githubusercontent.com/Wils0751/Midterm/gh-pages/js/users.json",//Defining all the variables at begining of code
-    JSONdata ={},
     loadbutton ={},// 
     morebutton ={},
     counter = 0,
-    tempFlag =0,
-    totalsize;
+    tempFlag =0;
+var JSONdata = [];
 
 document.addEventListener("DOMContentLoaded", function(event){// Working with the clickable buttons
     loadbutton = document.querySelector("#loadBtn"),
     morebutton = document.querySelector("#showBtn"),
     loadbutton.addEventListener("click", loaddata),
-    morebutton.addEventListener("click", next);
+    morebutton.addEventListener("click", Showmore);
 });
     
 function loaddata() {// Fetching JSON Data
@@ -19,38 +18,37 @@ function loaddata() {// Fetching JSON Data
     req.open('GET', JSonfile, false);
     req.onreadystatechange = function() {
         if (req.readyState == 4 && req.status == 200)       {
-        parseJson(req.responseText);
+       JSONdata= JSON.parse(req.responseText);
       }
     }
     if (loadbutton.className === 'btn enabled') {
         req.send(null);
+        Loadbutton();
     }
-
 }
-
-function parseJson(obj) {// Parse the Json data
-    JSONdata = JSON.parse(obj);
-    totalsize =JSONdata.length;
-    loadbutton.className = "btn disabled";// Next step after load button click
-    loadbutton.removeEventListener('click', loaddata);
+function Loadbutton(){
+    loadbutton.className = "btn disabled";
     morebutton.className = "btn enabled";
+    loadbutton.removeEventListener('click', loaddata);
+    Showmore();     
 }
-
-function next() {// Get show next button working
-    if (morebutton.innerHTML != 'Show Next') {
+function Showmore() {
+  if (morebutton.innerHTML != 'Show Next') {
         morebutton.innerHTML = 'Show Next';
-    }
-
-    if (counter < totalsize) {
-        setFeedByIndex(counter);
-    }
-    if (counter=== (totalsize - 1)) {
-        morebutton.removeEventListener('click', next);
-    }
+  }
+  if(counter < (JSONdata.length) ) {
+    setFeedByIndex(counter);
+  }
+  if (counter ===(JSONdata.length -1)){
+       morebutton.removeEventListener('click', DisplayName);
+      
+  }
     counter++;
 }
+
 function setFeedByIndex(index) {// Display Data o
     var newdata = document.querySelector("#output1");
+    
     newdata.innerHTML = '<img src="' + JSONdata[index]['image'] + '"><h2>' + toTitleCase(JSONdata[index]['firstName']) + ' ' + toTitleCase(JSONdata[index]['lastName']) + '</h2><a href="mailto:' + JSONdata[index]['email'] + '">' + JSONdata[index]['email'] + '</a></div>';
     if (counter != 0) {
         var olddata = document.querySelector("#output2");
